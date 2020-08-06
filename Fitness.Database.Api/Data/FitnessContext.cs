@@ -7,7 +7,7 @@ namespace Fitness.Database.Api.Data
 {
     class FitnessContext : DbContext
     {
-        public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<FitnessUser> fitnessuser { get; set; }
         /// <summary>
         /// Configure options.
         /// </summary>
@@ -27,7 +27,7 @@ namespace Fitness.Database.Api.Data
         /// <param name="options">The options.</param>
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
-            options.UseSqlServer(GetConnectionString());
+            options.UseNpgsql(GetConnectionString());
         }
         /// <summary>
         /// Get the connection string from the app settings.

@@ -6,7 +6,7 @@ namespace Fitness.Database.Api.Models
 {
     public class Food
     {
-        public long Id { get; set; }
+        public long FoodId { get; set; }
         public string Name { get; set; }
         public int Calories { get; set; }
     }

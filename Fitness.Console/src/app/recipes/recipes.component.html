@@ -1,0 +1,36 @@
+<h1>Recipes</h1>
+<h2>{{category}}</h2>
+<table *ngIf="recipes" mat-table [dataSource]="recipes" class="mat-elevation-z8">
+  <ng-container matColumnDef="Name">
+    <th mat-header-cell *matHeaderCellDef> Name </th>
+    <td mat-cell *matCellDef="let recipe"> {{recipe.Name}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="Created">
+    <th mat-header-cell *matHeaderCellDef> Created </th>
+    <td mat-cell *matCellDef="let recipe"> {{recipe.created}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="LastAccess">
+    <th mat-header-cell *matHeaderCellDef> Last Access </th>
+    <td mat-cell *matCellDef="let recipe"> {{recipe.lastAccess}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="Servings">
+    <th mat-header-cell *matHeaderCellDef> Servings </th>
+    <td mat-cell *matCellDef="let recipe"> {{recipe.servings}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="Calories">
+    <th mat-header-cell *matHeaderCellDef> Calories </th>
+    <td mat-cell *matCellDef="let recipe"> {{recipe.calories}} </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+<mat-paginator [length]="length"
+              [pageSize]="pageSize"
+              [pageSizeOptions]="pageSizeOptions"
+              (page)="pageEvent = $event">
+</mat-paginator>

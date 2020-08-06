@@ -1,0 +1,71 @@
+<h1>Diet</h1>
+<h2>Totals</h2>
+<table *ngIf="totals" mat-table [dataSource]="totals" class="mat-elevation-z8">
+  <ng-container matColumnDef="Name">
+    <th mat-header-cell *matHeaderCellDef> Name </th>
+    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="Calories">
+    <th mat-header-cell *matHeaderCellDef> Calories </th>
+    <td mat-cell *matCellDef="let element"> {{element.calories}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="Carbs">
+    <th mat-header-cell *matHeaderCellDef> Carbs </th>
+    <td mat-cell *matCellDef="let element"> {{element.carbs}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="Fat">
+    <th mat-header-cell *matHeaderCellDef> Fat </th>
+    <td mat-cell *matCellDef="let element"> {{element.fat}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="Sodium">
+    <th mat-header-cell *matHeaderCellDef> Sodium </th>
+    <td mat-cell *matCellDef="let element"> {{element.sodium}} </td>
+  </ng-container>
+  
+  <ng-container matColumnDef="Fiber">
+    <th mat-header-cell *matHeaderCellDef> Fiber </th>
+    <td mat-cell *matCellDef="let element"> {{element.fiber}} </td>
+  </ng-container>
+  
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+<h2>{{category}}</h2>
+<table *ngIf="food" mat-table [dataSource]="food" class="mat-elevation-z8">
+  <ng-container matColumnDef="Name">
+    <th mat-header-cell *matHeaderCellDef> Name </th>
+    <td mat-cell *matCellDef="let element"> {{element.Name}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="Calories">
+    <th mat-header-cell *matHeaderCellDef> Calories </th>
+    <td mat-cell *matCellDef="let element"> {{element.calories}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="Carbs">
+    <th mat-header-cell *matHeaderCellDef> Carbs </th>
+    <td mat-cell *matCellDef="let element"> {{element.lastAccess}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="Fat">
+    <th mat-header-cell *matHeaderCellDef> Fat </th>
+    <td mat-cell *matCellDef="let element"> {{element.servings}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="Sodium">
+    <th mat-header-cell *matHeaderCellDef> Sodium </th>
+    <td mat-cell *matCellDef="let element"> {{element.sodium}} </td>
+  </ng-container>
+  
+  <ng-container matColumnDef="Fiber">
+    <th mat-header-cell *matHeaderCellDef> Fiber </th>
+    <td mat-cell *matCellDef="let element"> {{element.fiber}} </td>
+  </ng-container>
+  
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>

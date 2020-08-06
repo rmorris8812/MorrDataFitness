@@ -1,0 +1,56 @@
+<mat-list style="vertical-align: top">
+	<mat-list-item>
+		<button mat-button [matMenuTriggerFor]="recipes">Recipes</button>
+		<mat-menu #recipes="matMenu">
+		  <button mat-menu-item >
+		  	<a routerLink="/recipes/breakfast" style="text-decoration: none;">Breakfast</a>
+		  </button>
+		  <button mat-menu-item >
+		  	<a routerLink="/recipes/lunch" style="text-decoration: none;">Lunch</a>
+		  </button>
+		  <button mat-menu-item >
+		  	<a routerLink="/recipes/dinner" style="text-decoration: none;">Dinner</a>
+		  </button>
+		  <button mat-menu-item >
+		  	<a routerLink="/recipes/snacks" style="text-decoration: none;">Snacks</a>
+		  </button>
+		  <button mat-menu-item >
+		  	<a routerLink="/recipes" style="text-decoration: none;">All</a>
+		  </button>
+		</mat-menu>
+	</mat-list-item>
+	<mat-list-item>
+		<button mat-button [matMenuTriggerFor]="food">Food</button>
+		<mat-menu #food="matMenu">
+		  <button mat-menu-item >
+		  	<a routerLink="/food/meat" style="text-decoration: none;">Meat</a>
+		  </button>
+		  <button mat-menu-item >
+		  	<a routerLink="/food/veggies" style="text-decoration: none;">Veggies</a>
+		  </button>
+		  <button mat-menu-item >
+		  	<a routerLink="/food/dairy" style="text-decoration: none;">Dairy</a>
+		  </button>
+		  <button mat-menu-item >
+		  	<a routerLink="/food/breads" style="text-decoration: none;">Bread</a>
+		  </button>
+		</mat-menu>
+	</mat-list-item>
+	<mat-list-item>
+		<button mat-button [matMenuTriggerFor]="diet">Diet</button>
+		<mat-menu #diet="matMenu">
+		  <button mat-menu-item >
+		  	<a routerLink="/diet/breakfast" style="text-decoration: none;">Breakfast</a>
+		  </button>
+		  <button mat-menu-item >
+		  	<a routerLink="/diet/lunch" style="text-decoration: none;">Lunch</a>
+		  </button>
+		  <button mat-menu-item >
+		  	<a routerLink="/diet/dinner" style="text-decoration: none;">Dinner</a>
+		  </button>
+		  <button mat-menu-item >
+		  	<a routerLink="/diet/snacks" style="text-decoration: none;">Snacks</a>
+		  </button>
+		</mat-menu>
+	</mat-list-item>
+</mat-list>

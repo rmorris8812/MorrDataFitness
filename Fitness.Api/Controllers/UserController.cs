@@ -2,6 +2,7 @@
 using Fitness.Database.Api;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Globalization;
 using System.Text;
 
 namespace Fitness.Api.Controllers
@@ -21,7 +22,10 @@ namespace Fitness.Api.Controllers
                     var encodedPassword = Convert.ToBase64String(Encoding.ASCII.GetBytes(userDto.Password));
                     if (user.Password.Equals(encodedPassword))
                     {
-                        return "84hfuihreiuwht85tgw4gjijrkg==";
+                        var token = Convert.ToBase64String(Encoding.ASCII.GetBytes(Guid.NewGuid().ToString()));
+                        user.Token = token;
+                        databaseApi.UpdateUser(user);
+                        return string.Format(CultureInfo.InvariantCulture, "{{ 'Token':'{0}' }}", token);
                     }
                 }
             }
