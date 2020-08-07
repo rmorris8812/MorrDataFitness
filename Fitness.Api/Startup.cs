@@ -36,11 +36,17 @@ namespace MorrDataFitness
                 app.UseDeveloperExceptionPage();
             }
 
+            /*app.UseCors(builder => builder
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .AllowCredentials());
+
             app.UseHttpsRedirection();
 
             app.UseRouting();
 
-            app.UseAuthorization();
+            app.UseAuthorization();*/
 
             app.UseEndpoints(endpoints =>
             {

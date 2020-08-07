@@ -1,0 +1,16 @@
+<h1 mat-dialog-title>Sign In</h1>
+<div mat-dialog-content>
+  <p>Email</p>
+  <mat-form-field>
+    <input disabled="false" matInput [(ngModel)]="dlgData.email">
+  </mat-form-field>
+  <p>Password</p>
+  <mat-form-field style="width:50px !important">
+    <input type="password" disabled="false" matInput [(ngModel)]="dlgData.password">
+  </mat-form-field>
+</div>
+
+
+<div mat-dialog-actions>
+  <button mat-button (click)="OnAuthenticate()">Sign In</button>
+</div>

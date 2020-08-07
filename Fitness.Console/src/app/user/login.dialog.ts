@@ -21,13 +21,12 @@ export class LoginDialog {
   	constructor(
     	public dialogRef: MatDialogRef<LoginDialog>,
     	@Inject(MAT_DIALOG_DATA) public data: IDialogData,
-    	public errorDialog: MatDialog,
-    	public loginDialog: MatDialog) {
+    	public errorDialog: MatDialog) {
   		
   		this.dlgData = data;
   	}
 
-  authenticate()
+  OnAuthenticate()
   {
     this.dlgData.service.authenticate(this.dlgData.email, this.dlgData.password);
   }

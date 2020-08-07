@@ -22,6 +22,7 @@ import {
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './user/login.component'
+import { LoginDialog } from './user/login.dialog'
 import { ErrorDialog } from './shared/error.dialog';
 import { RecipesComponent } from './recipes/recipes.component';
 import { FoodComponent } from './food/food.component';
@@ -36,6 +37,7 @@ import { MenuComponent } from "./menu.component";
   declarations: [
     AppComponent,
     LoginComponent,
+    LoginDialog,
     ErrorDialog,
     RecipesComponent,
     FoodComponent,
@@ -43,6 +45,7 @@ import { MenuComponent } from "./menu.component";
     SideNavComponent,
     MenuComponent
   ],
+  entryComponents: [ LoginDialog ],
   imports: [
     CommonModule,
     RouterModule.forRoot([
