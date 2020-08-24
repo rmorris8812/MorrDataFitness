@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { MatMenuTrigger } from '@angular/material';
 
-import { MorrDataService } from './services/morr.recipes.service';
+import { MorrDataService } from './services/morr.data.service';
 import { RouteService } from './route.service';
 
 @Component({

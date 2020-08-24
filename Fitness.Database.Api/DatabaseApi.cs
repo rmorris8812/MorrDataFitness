@@ -34,7 +34,7 @@ namespace Fitness.Database.Api
             if (existingUser != null)
             {
                 existingUser.FirstName = user.FirstName;
-                existingUser.FirstName = user.LastName;
+                existingUser.LastName = user.LastName;
                 existingUser.Password = user.Password;
                 existingUser.Token = user.Token;
 

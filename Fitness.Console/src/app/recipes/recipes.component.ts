@@ -6,7 +6,7 @@ import { tap, map, filter } from 'rxjs/operators';
 
 import { RecipeDto } from '../services/recipe.dto';
 import { RestContainer } from '../services/rest.container';
-import { MorrDataService } from '../services/morr.recipes.service';
+import { MorrDataService } from '../services/morr.data.service';
 
 @Component({
   selector: 'app-recipes',

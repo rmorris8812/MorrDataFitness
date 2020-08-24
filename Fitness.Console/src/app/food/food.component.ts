@@ -5,7 +5,7 @@ import { Observable, Subscriber } from 'rxjs';
 import { tap, map, filter } from 'rxjs/operators';
 
 import { FoodDto } from '../services/food.dto';
-import { MorrDataService } from '../services/morr.recipes.service';
+import { MorrDataService } from '../services/morr.data.service';
 
 @Component({
   selector: 'app-food',
