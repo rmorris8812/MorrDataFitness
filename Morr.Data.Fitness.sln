@@ -5,9 +5,17 @@ VisualStudioVersion = 16.0.30225.117
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fitness.Api", "Fitness.Api\Fitness.Api.csproj", "{BEE9DCB5-1C8B-44D8-816B-3DDFC0B28600}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fitness.Database.Api", "Fitness.Database.Api\Fitness.Database.Api.csproj", "{654AA0D6-1A5B-4963-B950-1AD518867936}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fitness.Database.Api", "Fitness.Database.Api\Fitness.Database.Api.csproj", "{654AA0D6-1A5B-4963-B950-1AD518867936}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fitness.Tests", "Fitness.Tests\Fitness.Tests.csproj", "{62565733-63FE-4D53-8F1A-D85410B24E78}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fitness.Tests", "Fitness.Tests\Fitness.Tests.csproj", "{62565733-63FE-4D53-8F1A-D85410B24E78}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServer", "IdentityServer\IdentityServer.csproj", "{227E4AEB-996D-4657-89B0-3C0E1E556DB7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MvcClient", "MvcClient\MvcClient.csproj", "{FF94FB6C-6A68-460D-A31D-ADB2C3A330A8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleClient", "ConsoleClient\ConsoleClient.csproj", "{1073ABFD-F225-453C-A455-ADBD11D88C2A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fitness.Api.Docker", "Fitness.Api.Docker\Fitness.Api.Docker.csproj", "{70B48BF4-9AF0-4CFE-B127-75D4A30C87F9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +35,22 @@ Global
 		{62565733-63FE-4D53-8F1A-D85410B24E78}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{62565733-63FE-4D53-8F1A-D85410B24E78}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{62565733-63FE-4D53-8F1A-D85410B24E78}.Release|Any CPU.Build.0 = Release|Any CPU
+		{227E4AEB-996D-4657-89B0-3C0E1E556DB7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{227E4AEB-996D-4657-89B0-3C0E1E556DB7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{227E4AEB-996D-4657-89B0-3C0E1E556DB7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{227E4AEB-996D-4657-89B0-3C0E1E556DB7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FF94FB6C-6A68-460D-A31D-ADB2C3A330A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF94FB6C-6A68-460D-A31D-ADB2C3A330A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF94FB6C-6A68-460D-A31D-ADB2C3A330A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF94FB6C-6A68-460D-A31D-ADB2C3A330A8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1073ABFD-F225-453C-A455-ADBD11D88C2A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1073ABFD-F225-453C-A455-ADBD11D88C2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1073ABFD-F225-453C-A455-ADBD11D88C2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1073ABFD-F225-453C-A455-ADBD11D88C2A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{70B48BF4-9AF0-4CFE-B127-75D4A30C87F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{70B48BF4-9AF0-4CFE-B127-75D4A30C87F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{70B48BF4-9AF0-4CFE-B127-75D4A30C87F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{70B48BF4-9AF0-4CFE-B127-75D4A30C87F9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

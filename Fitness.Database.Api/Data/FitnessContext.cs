@@ -7,7 +7,10 @@ namespace Fitness.Database.Api.Data
 {
     class FitnessContext : DbContext
     {
-        public virtual DbSet<FitnessUser> fitnessuser { get; set; }
+        public virtual DbSet<FitnessUser> FitnessUser { get; set; }
+        public virtual DbSet<Food> Food { get; set; }
+        public virtual DbSet<UserFood> UserFood { get; set; }
+        public virtual DbSet<UserRole> UserRole { get; set; }
         /// <summary>
         /// Configure options.
         /// </summary>

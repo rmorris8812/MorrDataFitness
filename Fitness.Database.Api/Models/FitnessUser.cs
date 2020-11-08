@@ -21,5 +21,7 @@ namespace Fitness.Database.Api.Models
         public string Password { get; set; }
         [Column("token")]
         public string Token { get; set; }
+        public long TenantId { get; set; }
+        public bool ExternalAuth { get; set; }
     }
 }

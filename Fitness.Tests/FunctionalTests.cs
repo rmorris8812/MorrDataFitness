@@ -3,6 +3,7 @@ using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Text;
+using System.Threading;
 
 namespace Fitness.Tests
 {
@@ -15,7 +16,7 @@ namespace Fitness.Tests
         public void TestGetUser_Sucess()
         {
             var databaseApi = new DatabaseApi();
-            var user = databaseApi.GetUserByEmail("rmorris8812@gmail.com");
+            var user = databaseApi.GetUserByEmailAsync("rmorris8812@gmail.com", CancellationToken.None).Result;
             user.Should().NotBeNull();
             user.FirstName.Should().BeEquivalentTo("Roy");
         }

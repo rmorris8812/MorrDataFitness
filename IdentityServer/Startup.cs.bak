@@ -1,0 +1,76 @@
+﻿/*---------------------------------------------------------------------------
+ * Startup.cs
+ *---------------------------------------------------------------------------
+ * Copyright (C) Ivanti Corporation 2020. All rights reserved.
+ *
+ * This file contains trade secrets of the Ivanti Corporation. No part
+ * may be reproduced or transmitted in any form by any means or for any purpose
+ * without the express written permission of the Ivanti Corporation.
+ *---------------------------------------------------------------------------
+ */
+using IdentityServer4;
+using IdentityServer4.Services;
+using ILS.Database.Api;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+
+namespace IdentityServer
+{
+    public class Startup
+    {
+        public void ConfigureServices(IServiceCollection services)
+        {
+            services.AddControllersWithViews();
+
+            // Inject ILS User Authentication
+            services.AddTransient<IProfileService, ProfileService>();
+
+            var builder = services.AddIdentityServer()
+                .AddInMemoryIdentityResources(Config.Ids)
+                .AddInMemoryApiResources(Config.Apis)
+                .AddInMemoryClients(Config.Clients)
+                .AddTestUsers(TestUsers.Users)
+                .AddProfileService<ProfileService>();
+
+            builder.AddDeveloperSigningCredential();
+
+            using var databaseApi = new ILSDatabaseApi();
+            foreach (var auth in databaseApi.GetIdentityFederatedAuths())
+            {
+                if (auth.Name.Equals("Salesforce"))
+                {
+                    services.AddAuthentication()
+                        .AddSalesforce("Salesforce", options =>
+                        {
+                            options.SignInScheme = auth.Scheme;
+                            options.ClientId = auth.ClientId;
+                            options.ClientSecret = auth.ClientSecret;
+                            options.AuthorizationEndpoint = "https://success.ivanti.com/services/oauth2/authorize";
+                        });
+                }
+            }
+        }
+
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        {
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
+
+            app.UseStaticFiles();
+            app.UseRouting();
+
+            app.UseIdentityServer();
+            app.UseAuthorization();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapDefaultControllerRoute();
+            });
+        }
+    }
+}

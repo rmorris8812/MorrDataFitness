@@ -14,7 +14,15 @@ CREATE TABLE FitnessUser (
      , Email VARCHAR(256)
      , Password VARCHAR(256)
      , Token VARCHAR(1024)
+     , TenantId VARCHAR(64)
+     , ExternalAuth BIT
      , PRIMARY KEY (UserId)
+);
+
+CREATE TABLE UserRole (
+      UserRoalId BIGINT NOT NULL
+    , UserRole VARCHAR(64)
+    , UserId BIGINT NOT NULL
 );
 
 CREATE TABLE UserFood (

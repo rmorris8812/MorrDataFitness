@@ -1,46 +1,36 @@
 ﻿using Fitness.Api.Dtos;
 using Fitness.Database.Api;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System;
 using System.Globalization;
 using System.Text;
 using System.Text.Json.Serialization;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Fitness.Api.Controllers
 {
     [Route("api/user")]
     [ApiController]
+    [Authorize]
     public class UserController : ControllerBase
     {
-        [HttpPost]
-        public string Login(UserDto userDto)
+        public async Task<UserDto> Get(string email)
         {
             using (var databaseApi = new DatabaseApi())
             {
-                var user = databaseApi.GetUserByEmail(userDto.Email);
-                if (user != null)
+                var user = await databaseApi.GetUserByEmailAsync(email, CancellationToken.None);
+                var dto = new UserDto()
                 {
-                    var encodedPassword = Convert.ToBase64String(Encoding.ASCII.GetBytes(userDto.Password));
-                    if (user.Password.Equals(encodedPassword))
-                    {
-                        var token = Convert.ToBase64String(Encoding.ASCII.GetBytes(Guid.NewGuid().ToString()));
-                        user.Token = token;
-                        databaseApi.UpdateUser(user);
-
-                        var dto = new UserDto()
-                        {
-                            FirstName = user.FirstName,
-                            LastName = user.LastName,
-                            Email = user.Email,
-                            Token = user.Token
-                        };
-                        return JsonConvert.SerializeObject(dto);
-                    }
-                }
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    Email = user.Email,
+                    Token = user.Token
+                };
+                return dto;
             }
-            HttpContext.Response.StatusCode = 401;
-            return null;
         }
     }
 }
