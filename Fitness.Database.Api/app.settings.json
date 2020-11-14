@@ -1,3 +1,3 @@
 {
-  "ConnectionString": "host=localhost;port=5432;database=Fitness;user id=postgres;password=admin123$"
+  "ConnectionString": "host=host.docker.internal;port=5432;database=Fitness;user id=postgres;password=admin123$"
 }

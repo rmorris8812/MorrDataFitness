@@ -28,7 +28,7 @@ namespace MorrDataFitness
         {
             services.AddControllers();
 
-            services.AddAuthentication("Bearer")
+            services.AddAuthentication()
             .AddJwtBearer("Bearer", options =>
             {
                 options.Authority = "http://localhost:5000";

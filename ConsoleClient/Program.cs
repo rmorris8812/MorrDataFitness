@@ -40,7 +40,7 @@ namespace ConsoleClient
             var apiClient = new HttpClient();
             apiClient.SetBearerToken(tokenResponse.AccessToken);
 
-            var response = apiClient.GetAsync("http://localhost:64901/pi/user").Result;
+            var response = apiClient.GetAsync("http://localhost:64901/api/user").Result;
             if (!response.IsSuccessStatusCode)
             {
                 Console.WriteLine(response.StatusCode);

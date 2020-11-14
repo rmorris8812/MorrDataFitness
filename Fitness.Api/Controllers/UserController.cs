@@ -17,11 +17,13 @@ namespace Fitness.Api.Controllers
     [Authorize]
     public class UserController : ControllerBase
     {
-        public async Task<UserDto> Get(string email)
+        [HttpGet]
+        [Authorize]
+        public async Task<UserDto> Get(string email, string tenantId)
         {
             using (var databaseApi = new DatabaseApi())
             {
-                var user = await databaseApi.GetUserByEmailAsync(email, CancellationToken.None);
+                var user = await databaseApi.GetUserByEmailAsync(email, tenantId, CancellationToken.None);
                 var dto = new UserDto()
                 {
                     FirstName = user.FirstName,

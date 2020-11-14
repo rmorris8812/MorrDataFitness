@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Fitness.Database.Api.Models
 {
+    [Table("fitnessuser")]
     public class FitnessUser
     {
         [Key]
@@ -21,7 +22,9 @@ namespace Fitness.Database.Api.Models
         public string Password { get; set; }
         [Column("token")]
         public string Token { get; set; }
-        public long TenantId { get; set; }
+        [Column("tenantid")]
+        public string TenantId { get; set; }
+        [Column("externalauth")]
         public bool ExternalAuth { get; set; }
     }
 }

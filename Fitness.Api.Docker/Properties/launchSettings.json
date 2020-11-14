@@ -29,7 +29,7 @@
     "Docker": {
       "commandName": "Docker",
       "launchBrowser": true,
-      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/weatherforecast",
+      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/api/user?email=rmorris8812@gmail.com&tenantId=Morris",
       "publishAllPorts": true
     },
     "Container in Kubernetes": {

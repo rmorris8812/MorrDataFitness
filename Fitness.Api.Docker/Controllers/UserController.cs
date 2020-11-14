@@ -1,12 +1,10 @@
-﻿using Fitness.Api.Dtos;
+﻿using Fitness.Api.Docker.Rest;
+using Fitness.Api.Dtos;
 using Fitness.Database.Api;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 using System;
-using System.Globalization;
-using System.Text;
-using System.Text.Json.Serialization;
+using System.Net;
+using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -17,19 +15,35 @@ namespace Fitness.Api.Controllers
     //Authorize]
     public class UserController : ControllerBase
     {
-        public async Task<UserDto> Get(string email)
+        public async Task<RestResponse> Get(string email, string tenantId)
         {
-            using (var databaseApi = new DatabaseApi())
+            try
             {
-                var user = await databaseApi.GetUserByEmailAsync(email, CancellationToken.None);
-                var dto = new UserDto()
+                if (email == null)
+                    throw new ArgumentNullException("email is required.");
+                if (email == null)
+                    throw new ArgumentNullException("tenantId is required.");
+
+                using (var databaseApi = new DatabaseApi())
                 {
-                    FirstName = user.FirstName,
-                    LastName = user.LastName,
-                    Email = user.Email,
-                    Token = user.Token
-                };
-                return dto;
+                    var user = await databaseApi.GetUserByEmailAsync(email, tenantId, CancellationToken.None);
+                    if (user == null)
+                        return RestFactory.CreateErrorResponse(HttpStatusCode.NotFound, "User not found!", Request);
+                    
+                    var dto = new UserDto()
+                    {
+                        FirstName = user.FirstName,
+                        LastName = user.LastName,
+                        Email = user.Email,
+                        Token = user.Token,
+                        TenantId = user.TenantId
+                    };
+                    return RestFactory.CreateResponse(HttpStatusCode.OK, dto, Request);
+                }
+            } 
+            catch (Exception e)
+            {
+                return RestFactory.CreateErrorResponse(HttpStatusCode.InternalServerError, e, Request);
             }
         }
     }

@@ -1,4 +1,9 @@
-﻿CREATE SEQUENCE hibernate_sequence START 3000;
+﻿DROP TABLE UserRole;
+DROP TABLE UserFood;
+DROP TABLE FitnessUser;
+DROP TABLE Food;
+
+CREATE SEQUENCE hibernate_sequence START 3000;
 
 CREATE TABLE Food (
        FoodId BIGINT NOT NULL
@@ -15,12 +20,12 @@ CREATE TABLE FitnessUser (
      , Password VARCHAR(256)
      , Token VARCHAR(1024)
      , TenantId VARCHAR(64)
-     , ExternalAuth BIT
+     , ExternalAuth BOOLEAN
      , PRIMARY KEY (UserId)
 );
 
 CREATE TABLE UserRole (
-      UserRoalId BIGINT NOT NULL
+      UserRoleId BIGINT NOT NULL
     , UserRole VARCHAR(64)
     , UserId BIGINT NOT NULL
 );
@@ -32,7 +37,9 @@ CREATE TABLE UserFood (
      , PRIMARY KEY (UserFoodId)
 );
 
-INSERT INTO FitnessUser (UserId, FirstName, LastName, Email, Password) VALUES (1, 'Roy', 'Morris', 'rmorris8812@gmail.com', 'palm88!2');
+INSERT INTO FitnessUser (UserId, FirstName, LastName, Email, Password, ExternalAuth) VALUES (1, 'Roy', 'Morris', 'rmorris8812@gmail.com', 'palm88!2', '0');
 UPDATE FitnessUser SET Password='cGFsbTg4ITI=';
+INSERT INTO UserRole (UserRoleId, UserRole, UserId) VALUES(1, 'admin', 1);
 
 SELECT * FROM FitnessUser;
+
