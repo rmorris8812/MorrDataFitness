@@ -1,6 +1,10 @@
-﻿using Fitness.Database.Api.Data;
+﻿// ***************************************************************
+// Copyright 2020 MorrData LLC. All rights reserved.
+// ***************************************************************
+using Fitness.Database.Api.Data;
 using Fitness.Database.Api.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -12,6 +16,7 @@ namespace Fitness.Database.Api
 {
     public class DatabaseApi : IDisposable
     {
+        private static readonly ILogger<DatabaseApi> _logger = new LoggerFactory().CreateLogger<DatabaseApi>();
         private readonly FitnessContext _context;
 
         public DatabaseApi()
@@ -51,6 +56,12 @@ namespace Fitness.Database.Api
         {
             return _context.FitnessUser.FirstOrDefaultAsync(u => u.Email == email && u.TenantId == tenantId, token);
         }
+        /// <summary>
+        /// Insert a user.
+        /// </summary>
+        /// <param name="user">The user to insert</param>
+        /// <param name="token">The cancellation token</param>
+        /// <returns>The id of the user</returns>
         public async Task<long> InsertUserAsync(FitnessUser user, CancellationToken token)
         {
             _context.FitnessUser.Add(user);
@@ -75,15 +86,73 @@ namespace Fitness.Database.Api
                 _context.SaveChanges();
             }
         }
+        /// <summary>
+        /// Delete a user.
+        /// </summary>
+        /// <param name="id">The id of the user</param>
+        /// <param name="token">The cancellation token</param>
+        /// <returns>nada</returns>
         public async Task DeleteUserAsync(long id, CancellationToken token)
         {
             var user = await GetUserByIdAsync(id, token);
             if (user != null)
             {
-                var userRole = await _context.UserRole.FirstOrDefaultAsync<UserRole>(u => u.UserId == user.Id, token);
-                _context.UserRole.Remove(userRole);
+                await DeleteUserRoleAsync(user.Id, token);
+
                 _context.FitnessUser.Remove(user);
                 await _context.SaveChangesAsync(token);
+            }
+        }
+        #endregion
+        #region UserRole
+        /// <summary>
+        /// Get the user's role.
+        /// </summary>
+        /// <param name="id">The id of the user</param>
+        /// <param name="token">The cancellation token</param>
+        /// <returns>The user's role.</returns>
+        public async Task<UserRole> GetUserRoleByUserIdAsync(long id, CancellationToken token)
+        {
+            return await _context.UserRole.FirstOrDefaultAsync<UserRole>(u => u.UserId == id, token);
+        }
+        /// <summary>
+        /// Insert the user role for a given user.
+        /// </summary>
+        /// <param name="role">The role to insert</param>
+        /// <param name="token">The cancellation token</param>
+        /// <returns>The id of the user inserted</returns>
+        public async Task<long> InsertUserRoleAsync(UserRole role, CancellationToken token)
+        {
+            if (role.UserId == 0)
+                throw new ArgumentException("The user id must be set");
+            var user = GetUserByIdAsync(role.UserId, token);
+            if (user == null)
+                throw new ArgumentNullException("The user was not found.");
+
+            _context.UserRole.Add(role);
+            await _context.SaveChangesAsync(token);
+            return role.Id;
+        }
+        /// <summary>
+        /// Delete a user role.
+        /// </summary>
+        /// <param name="userId">The user id of the role</param>
+        /// <param name="token">The cancellation token</param>
+        /// <returns>nada</returns>
+        public async Task DeleteUserRoleAsync(long userId, CancellationToken token)
+        {
+            try
+            {
+                var role = await GetUserRoleByUserIdAsync(userId, token);
+                if (role != null)
+                {
+                    _context.UserRole.Remove(role);
+                    await _context.SaveChangesAsync(token);
+                }
+            }
+            catch (Exception e) 
+            {
+                _logger.LogError(e, string.Format(CultureInfo.InvariantCulture, "Can't delete user role based on user id {0}", userId));
             }
         }
         #endregion
@@ -142,34 +211,6 @@ namespace Fitness.Database.Api
         public void Dispose()
         {
             _context?.Dispose();
-        }
-        /// <summary>
-        /// Get the user's role.
-        /// </summary>
-        /// <param name="id">The id of the user</param>
-        /// <param name="token">The cancellation token</param>
-        /// <returns>The user's role.</returns>
-        public async Task<UserRole> GetUserRoleByUserIdAsync(long id, CancellationToken token)
-        {
-            return await _context.UserRole.FirstOrDefaultAsync<UserRole>(u => u.UserId == id, token);
-        }
-        /// <summary>
-        /// Insert the user role for a given user.
-        /// </summary>
-        /// <param name="role"></param>
-        /// <param name="token"></param>
-        /// <returns></returns>
-        public async Task<long> InsertUserRoleAsync(UserRole role, CancellationToken token)
-        {
-            if (role.UserId == 0)
-                throw new ArgumentException("The user id must be set");
-            var user = GetUserRoleByUserIdAsync(role.UserId, token);
-            if (user == null)
-                throw new ArgumentNullException("The user was not found.");
-
-            _context.UserRole.Add(role);
-            await _context.SaveChangesAsync(token);
-            return role.Id;
         }
     }
 }

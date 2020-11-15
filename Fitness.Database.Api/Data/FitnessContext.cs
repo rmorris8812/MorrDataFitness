@@ -1,6 +1,8 @@
-﻿using Fitness.Database.Api.Models;
+﻿// ***************************************************************
+// Copyright 2020 MorrData LLC. All rights reserved.
+// ***************************************************************
+using Fitness.Database.Api.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using System;
 
 namespace Fitness.Database.Api.Data 
