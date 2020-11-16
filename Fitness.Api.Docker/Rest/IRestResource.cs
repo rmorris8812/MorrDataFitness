@@ -1,4 +1,4 @@
-﻿namespace Fitness.Api.Docker.Rest
+﻿namespace Fitness.Api.Rest
 {
     public interface IRestResource
     {

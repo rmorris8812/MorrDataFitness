@@ -3,7 +3,7 @@
 // ***************************************************************
 using System;
 
-namespace Fitness.Api.Docker.Dtos
+namespace Fitness.Api.Dtos
 {
     public class UserFoodDto
     {

@@ -1,9 +1,9 @@
-﻿using System;
+﻿// ***************************************************************
+// Copyright 2020 MorrData LLC. All rights reserved.
+// ***************************************************************
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace Fitness.Api.Docker.Rest
+namespace Fitness.Api.Rest
 {
     public class RestResponse
     {

@@ -2,16 +2,13 @@
 // Copyright 2020 MorrData LLC. All rights reserved.
 // ***************************************************************
 using Fitness.Api.Dtos;
-using Fitness.Database.Api.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Extensions;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Threading.Tasks;
 
-namespace Fitness.Api.Docker.Rest
+namespace Fitness.Api.Rest
 {
     public static class RestFactory
     {
@@ -20,6 +17,14 @@ namespace Fitness.Api.Docker.Rest
             var dataResource = new UserResource()
             {
                 Data = user
+            };
+            return CreateResponse(statusCode, dataResource, request);
+        }
+        public static RestResponse CreateResponse(HttpStatusCode statusCode, List<FoodDto> food, HttpRequest request)
+        {
+            var dataResource = new FoodArrayResource()
+            {
+                Data = food
             };
             return CreateResponse(statusCode, dataResource, request);
         }

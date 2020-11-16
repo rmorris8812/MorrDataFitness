@@ -8,6 +8,11 @@ CREATE TABLE Food (
        FoodId BIGINT NOT NULL
      , Name VARCHAR(256)
      , Calories INT
+     , Serving INT
+     , Unit INT
+     , Carbs INT
+     , Fat INT
+     , Salt INT
      , PRIMARY KEY (FoodId)
 );
 

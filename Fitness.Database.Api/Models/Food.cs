@@ -17,5 +17,15 @@ namespace Fitness.Database.Api.Models
         public string Name { get; set; }
         [Column("calories")]
         public int Calories { get; set; }
+        [Column("serving")]
+        public int ServiingSize { get; set; }
+        [Column("unit")]
+        public int Unit { get; set; }
+        [Column("carbs")]
+        public int Carbs { get; set; }
+        [Column("fat")]
+        public int Fat { get; set; }
+        [Column("salt")]
+        public int Salt { get; set; }
     }
 }

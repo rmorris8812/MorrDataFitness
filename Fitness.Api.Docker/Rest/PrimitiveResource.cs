@@ -2,7 +2,7 @@
 // Copyright 2020 MorrData LLC. All rights reserved.
 // ***************************************************************
 
-namespace Fitness.Api.Docker.Rest
+namespace Fitness.Api.Rest
 {
     public class StringResource : IRestResource
     {

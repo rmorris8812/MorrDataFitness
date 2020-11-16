@@ -2,7 +2,7 @@
 // Copyright 2020 MorrData LLC. All rights reserved.
 // ***************************************************************
 
-namespace Fitness.Api.Docker.Dtos
+namespace Fitness.Api.Dtos
 {
     public class FoodDto
     {

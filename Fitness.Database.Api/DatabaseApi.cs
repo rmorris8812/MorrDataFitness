@@ -157,6 +157,17 @@ namespace Fitness.Database.Api
         #endregion
         #region Food
         /// <summary>
+        /// Get a page of food items.
+        /// </summary>
+        /// <param name="startIndex">The start index (skip)</param>
+        /// <param name="maxResults">The max number of items to return.</param>
+        /// <returns>A list of food items.</returns>
+        public List<Food> GetFood(int startIndex, int maxResults)
+        {
+            return _context.Food.Skip(startIndex).Take(maxResults).ToList<Food>();
+        }
+
+        /// <summary>
         /// Search for food item.
         /// </summary>
         /// <param name="search">The search criteria</param>
