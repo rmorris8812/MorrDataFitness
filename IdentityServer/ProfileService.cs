@@ -1,13 +1,7 @@
-﻿/*---------------------------------------------------------------------------
- * ProfileService.cs
- *---------------------------------------------------------------------------
- * Copyright (C) Ivanti Corporation 2020. All rights reserved.
- *
- * This file contains trade secrets of the Ivanti Corporation. No part
- * may be reproduced or transmitted in any form by any means or for any purpose
- * without the express written permission of the Ivanti Corporation.
- *---------------------------------------------------------------------------
- */
+﻿// ***************************************************************
+// Copyright 2020 MorrData LLC. All rights reserved.
+// ***************************************************************
+
 using System;
 using System.Collections.Generic;
 using System.Security.Claims;
@@ -15,7 +9,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Fitness.Database.Api;
 using Fitness.Database.Api.Models;
-using IdentityModel;
 using IdentityServer4.Models;
 using IdentityServer4.Services;
 
@@ -35,8 +28,7 @@ namespace IdentityServer
                     var user = await _userRepository.GetUserByEmailAsync(context.Subject.Identity.Name, CancellationToken.None);
                     if (user != null)
                     {
-                        var roleMembership = await _userRepository.GetUserRoleByUserIdAsync(user.Id, CancellationToken.None);
-                        context.IssuedClaims = GetUserClaims(user, roleMembership);
+                        context.IssuedClaims = GetUserClaims(user);
                     }
                 }
             }
@@ -60,12 +52,12 @@ namespace IdentityServer
                 }
             });
         }
-        public static List<Claim> GetUserClaims(FitnessUser user, UserRole role)
+        public static List<Claim> GetUserClaims(FitnessUser user)
         {
             return new List<Claim>()
             {
                 new Claim("user_id", user.Id.ToString() ?? ""),
-                new Claim("user_role", role.Role.ToString() ?? ""),
+                new Claim("user_role", user.UserRole.ToString() ?? ""),
                 new Claim("tenant_id", user.TenantId.ToString() ?? ""),
             };
         }

@@ -1,12 +1,10 @@
-﻿using Fitness.Api.Dtos;
+﻿// ***************************************************************
+// Copyright 2020 MorrData LLC. All rights reserved.
+// ***************************************************************
+using Fitness.Api.Dtos;
 using Fitness.Database.Api;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using System;
-using System.Globalization;
-using System.Text;
-using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
 

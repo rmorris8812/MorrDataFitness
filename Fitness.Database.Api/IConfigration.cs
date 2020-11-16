@@ -4,7 +4,7 @@
 
 namespace Fitness.Database.Api
 {
-    public interface IConfigrationProvider
+    public interface IConfigration
     {
         string GetValue(string key);
     }

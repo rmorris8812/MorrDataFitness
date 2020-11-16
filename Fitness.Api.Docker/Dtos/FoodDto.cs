@@ -2,12 +2,12 @@
 // Copyright 2020 MorrData LLC. All rights reserved.
 // ***************************************************************
 
-namespace Fitness.Database.Api.Models
+namespace Fitness.Api.Docker.Dtos
 {
-    public class UserRole
+    public class FoodDto
     {
-        public long Id { get; set; }
-        public string Role { get; set; }
-        public long UserId { get; set; }
+        public long FoodId { get; set; }
+        public string Name { get; set; }
+        public int Calories { get; set; }
     }
 }

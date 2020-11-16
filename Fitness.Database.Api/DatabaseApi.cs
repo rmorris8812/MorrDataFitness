@@ -4,7 +4,7 @@
 using Fitness.Database.Api.Data;
 using Fitness.Database.Api.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -16,7 +16,7 @@ namespace Fitness.Database.Api
 {
     public class DatabaseApi : IDisposable
     {
-        private static readonly ILogger<DatabaseApi> _logger = new LoggerFactory().CreateLogger<DatabaseApi>();
+        private static readonly ILogger _logger = NLog.LogManager.GetCurrentClassLogger();
         private readonly FitnessContext _context;
 
         public DatabaseApi()
@@ -56,6 +56,39 @@ namespace Fitness.Database.Api
         {
             return _context.FitnessUser.FirstOrDefaultAsync(u => u.Email == email && u.TenantId == tenantId, token);
         }
+        public static void ValidateUser(FitnessUser user)
+        {
+            if (user == null)
+            {
+                var message = "User object is required";
+                _logger.Error(message);
+                throw new ArgumentNullException(message);
+            }
+            if (string.IsNullOrEmpty(user.TenantId))
+            {
+                var message = "User tenant id is required";
+                _logger.Error(message);
+                throw new ArgumentNullException(message);
+            }
+            if (string.IsNullOrEmpty(user.Email))
+            {
+                var message = "User email is required";
+                _logger.Error(message);
+                throw new ArgumentNullException(message);
+            }
+            if (string.IsNullOrEmpty(user.Password))
+            {
+                var message = "User password is required";
+                _logger.Error(message);
+                throw new ArgumentNullException(message);
+            }
+            if (string.IsNullOrEmpty(user.FirstName))
+            {
+                var message = "User first name is required";
+                _logger.Error(message);
+                throw new ArgumentNullException(message);
+            }
+        }
         /// <summary>
         /// Insert a user.
         /// </summary>
@@ -64,9 +97,26 @@ namespace Fitness.Database.Api
         /// <returns>The id of the user</returns>
         public async Task<long> InsertUserAsync(FitnessUser user, CancellationToken token)
         {
+            ValidateUser(user);
+
+            user.UserRole = "user";
             _context.FitnessUser.Add(user);
             await _context.SaveChangesAsync(token);
-            var role = new UserRole() { Role = "user", UserId = user.Id };
+            return user.Id;
+        }
+        /// <summary>
+        /// Insert a user.
+        /// </summary>
+        /// <param name="user">The user to insert</param>
+        /// <param name="token">The cancellation token</param>
+        /// <returns>The id of the user</returns>
+        public async Task<long> InsertUserAdminAsync(FitnessUser user, CancellationToken token)
+        {
+            ValidateUser(user);
+
+            user.UserRole = "adminuser";
+            _context.FitnessUser.Add(user);
+            await _context.SaveChangesAsync(token);
             return user.Id;
         }
         /// <summary>
@@ -82,7 +132,6 @@ namespace Fitness.Database.Api
                 existingUser.LastName = user.LastName;
                 existingUser.Password = user.Password;
                 existingUser.Token = user.Token;
-
                 _context.SaveChanges();
             }
         }
@@ -97,62 +146,12 @@ namespace Fitness.Database.Api
             var user = await GetUserByIdAsync(id, token);
             if (user != null)
             {
-                await DeleteUserRoleAsync(user.Id, token);
-
                 _context.FitnessUser.Remove(user);
                 await _context.SaveChangesAsync(token);
             }
-        }
-        #endregion
-        #region UserRole
-        /// <summary>
-        /// Get the user's role.
-        /// </summary>
-        /// <param name="id">The id of the user</param>
-        /// <param name="token">The cancellation token</param>
-        /// <returns>The user's role.</returns>
-        public async Task<UserRole> GetUserRoleByUserIdAsync(long id, CancellationToken token)
-        {
-            return await _context.UserRole.FirstOrDefaultAsync<UserRole>(u => u.UserId == id, token);
-        }
-        /// <summary>
-        /// Insert the user role for a given user.
-        /// </summary>
-        /// <param name="role">The role to insert</param>
-        /// <param name="token">The cancellation token</param>
-        /// <returns>The id of the user inserted</returns>
-        public async Task<long> InsertUserRoleAsync(UserRole role, CancellationToken token)
-        {
-            if (role.UserId == 0)
-                throw new ArgumentException("The user id must be set");
-            var user = GetUserByIdAsync(role.UserId, token);
-            if (user == null)
-                throw new ArgumentNullException("The user was not found.");
-
-            _context.UserRole.Add(role);
-            await _context.SaveChangesAsync(token);
-            return role.Id;
-        }
-        /// <summary>
-        /// Delete a user role.
-        /// </summary>
-        /// <param name="userId">The user id of the role</param>
-        /// <param name="token">The cancellation token</param>
-        /// <returns>nada</returns>
-        public async Task DeleteUserRoleAsync(long userId, CancellationToken token)
-        {
-            try
+            else
             {
-                var role = await GetUserRoleByUserIdAsync(userId, token);
-                if (role != null)
-                {
-                    _context.UserRole.Remove(role);
-                    await _context.SaveChangesAsync(token);
-                }
-            }
-            catch (Exception e) 
-            {
-                _logger.LogError(e, string.Format(CultureInfo.InvariantCulture, "Can't delete user role based on user id {0}", userId));
+                _logger.Error(string.Format(CultureInfo.InvariantCulture, "User {0} not found", id));
             }
         }
         #endregion

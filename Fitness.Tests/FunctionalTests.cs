@@ -34,7 +34,7 @@ namespace Fitness.Tests
                 LastName = "Bar",
                 Email = "foobar@acme.com",
                 Password = "secret",
-                TenantId = "1234",
+                TenantId = "acme.com",
                 ExternalAuth = false
             };
             await databaseApi.InsertUserAsync(newUser, CancellationToken.None);
@@ -62,7 +62,7 @@ namespace Fitness.Tests
                 FirstName = "Jane",
                 LastName = "Doe",
                 Password = "secret",
-                TenantId = Guid.NewGuid().ToString(),
+                TenantId = "acme.com",
                 Id = 11
             };
                 

@@ -1,4 +1,7 @@
-﻿using Fitness.Api.Dtos;
+﻿// ***************************************************************
+// Copyright 2020 MorrData LLC. All rights reserved.
+// ***************************************************************
+using Fitness.Api.Dtos;
 using Fitness.Database.Api.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Extensions;
@@ -14,10 +17,38 @@ namespace Fitness.Api.Docker.Rest
     {
         public static RestResponse CreateResponse(HttpStatusCode statusCode, UserDto user, HttpRequest request)
         {
-            var userResource = new UserResource()
+            var dataResource = new UserResource()
             {
                 Data = user
             };
+            return CreateResponse(statusCode, dataResource, request);
+        }
+        public static RestResponse CreateResponse(HttpStatusCode statusCode, string data, HttpRequest request)
+        {
+            var dataResource = new StringResource()
+            {
+                Data = data
+            };
+            return CreateResponse(statusCode, dataResource, request);
+        }
+        public static RestResponse CreateResponse(HttpStatusCode statusCode, long data, HttpRequest request)
+        {
+            var dataResource = new LongResource()
+            {
+                Data = data
+            };
+            return CreateResponse(statusCode, dataResource, request);
+        }
+        public static RestResponse CreateResponse(HttpStatusCode statusCode, bool data, HttpRequest request)
+        {
+            var dataResource = new BoolResource()
+            {
+                Data = data
+            };
+            return CreateResponse(statusCode, dataResource, request);
+        }
+        private static RestResponse CreateResponse(HttpStatusCode statusCode, IRestResource dataResource, HttpRequest request)
+        {
             return new RestResponse()
             {
                 Allowed = new List<string>() { "GET", "POST", "UPDATE", "DELETE" },
@@ -25,7 +56,7 @@ namespace Fitness.Api.Docker.Rest
                 ExtendedCode = 0,
                 StatusCode = 200,
                 HRef = request.GetDisplayUrl(),
-                Resource = userResource
+                Resource = dataResource
             };
         }
         public static RestResponse CreateErrorResponse(HttpStatusCode statusCode, Exception ex, HttpRequest request)

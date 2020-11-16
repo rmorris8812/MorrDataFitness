@@ -1,5 +1,4 @@
-﻿DROP TABLE UserRole;
-DROP TABLE UserFood;
+﻿DROP TABLE UserFood;
 DROP TABLE FitnessUser;
 DROP TABLE Food;
 
@@ -21,13 +20,8 @@ CREATE TABLE FitnessUser (
      , Token VARCHAR(1024)
      , TenantId VARCHAR(64)
      , ExternalAuth BOOLEAN
+     , UserRole VARCHAR(32)
      , PRIMARY KEY (UserId)
-);
-
-CREATE TABLE UserRole (
-      UserRoleId BIGINT NOT NULL
-    , UserRole VARCHAR(64)
-    , UserId BIGINT NOT NULL
 );
 
 CREATE TABLE UserFood (
@@ -37,9 +31,8 @@ CREATE TABLE UserFood (
      , PRIMARY KEY (UserFoodId)
 );
 
-INSERT INTO FitnessUser (UserId, FirstName, LastName, Email, Password, ExternalAuth) VALUES (1, 'Roy', 'Morris', 'rmorris8812@gmail.com', 'palm88!2', '0');
+INSERT INTO FitnessUser (UserId, FirstName, LastName, Email, Password, TenantId, ExternalAuth, UserRole) VALUES (1, 'Roy', 'Morris', 'rmorris8812@gmail.com', 'palm88!2', 'morrdata.com', '0', 'admin');
 UPDATE FitnessUser SET Password='cGFsbTg4ITI=';
-INSERT INTO UserRole (UserRoleId, UserRole, UserId) VALUES(1, 'admin', 1);
 
 SELECT * FROM FitnessUser;
 

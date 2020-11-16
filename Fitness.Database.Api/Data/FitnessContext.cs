@@ -14,7 +14,6 @@ namespace Fitness.Database.Api.Data
         public virtual DbSet<FitnessUser> FitnessUser { get; set; }
         public virtual DbSet<Food> Food { get; set; }
         public virtual DbSet<UserFood> UserFood { get; set; }
-        public virtual DbSet<UserRole> UserRole { get; set; }
         /// <summary>
         /// Configure options.
         /// </summary>
@@ -54,7 +53,7 @@ namespace Fitness.Database.Api.Data
             {
                 return _connectionString;
             }
-            var configurationProvider = new JsonConfigurationProvider();
+            var configurationProvider = new JsonConfiguration();
             var connectionString = configurationProvider.GetValue("ConnectionString");
             if (connectionString == null)
                 throw new ArgumentNullException("Connection string not found");
@@ -63,8 +62,6 @@ namespace Fitness.Database.Api.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<FitnessUser>().Property(b => b.Id)
-                .HasIdentityOptions(startValue: IdentityStart);
-            modelBuilder.Entity<UserRole>().Property(b => b.Id)
                 .HasIdentityOptions(startValue: IdentityStart);
             modelBuilder.Entity<Food>().Property(b => b.FoodId)
                 .HasIdentityOptions(startValue: IdentityStart);

@@ -1,4 +1,7 @@
-﻿using IdentityModel.Client;
+﻿// ***************************************************************
+// Copyright 2020 MorrData LLC. All rights reserved.
+// ***************************************************************
+using IdentityModel.Client;
 using System;
 using System.Net.Http;
 

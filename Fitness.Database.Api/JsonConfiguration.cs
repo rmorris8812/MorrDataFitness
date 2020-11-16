@@ -7,12 +7,12 @@ using System;
 
 namespace Fitness.Database.Api
 {
-    public class JsonConfigurationProvider : IConfigrationProvider
+    public class JsonConfiguration : IConfigration
     {
         private readonly IConfigurationBuilder _builder;
         private readonly IConfigurationRoot _configuration;
 
-        public JsonConfigurationProvider()
+        public JsonConfiguration()
         {
             _builder = new ConfigurationBuilder().AddJsonFile(@"app.settings.json", true, true);
             if (_builder == null)

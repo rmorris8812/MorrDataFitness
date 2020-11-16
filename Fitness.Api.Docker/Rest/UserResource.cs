@@ -1,8 +1,7 @@
-﻿using Fitness.Api.Dtos;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿// ***************************************************************
+// Copyright 2020 MorrData LLC. All rights reserved.
+// ***************************************************************
+using Fitness.Api.Dtos;
 
 namespace Fitness.Api.Docker.Rest
 {
