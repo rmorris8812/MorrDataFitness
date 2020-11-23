@@ -8,11 +8,13 @@ CREATE TABLE Food (
        FoodId BIGINT NOT NULL
      , Name VARCHAR(256)
      , Calories INT
-     , Serving INT
+     , Serving FLOAT
      , Unit INT
      , Carbs INT
      , Fat INT
      , Salt INT
+     , Protein INT
+     , Sugar INT
      , PRIMARY KEY (FoodId)
 );
 
@@ -40,4 +42,7 @@ INSERT INTO FitnessUser (UserId, FirstName, LastName, Email, Password, TenantId,
 UPDATE FitnessUser SET Password='cGFsbTg4ITI=';
 
 SELECT * FROM FitnessUser;
+
+INSERT INTO Food (FoodId, Name, Calories, Serving, Unit, Carbs, Fat, Salt)
+VALUES (1, 'Banana', 151, 6, 0, 19, 0, 1);
 

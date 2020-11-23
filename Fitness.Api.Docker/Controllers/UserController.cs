@@ -1,5 +1,8 @@
-﻿using Fitness.Api.Docker.Rest;
+﻿// ***************************************************************
+// Copyright 2020 MorrData LLC. All rights reserved.
+// ***************************************************************
 using Fitness.Api.Dtos;
+using Fitness.Api.Rest;
 using Fitness.Database.Api;
 using Fitness.Database.Api.Models;
 using Microsoft.AspNetCore.Mvc;
