@@ -31,8 +31,59 @@ CREATE TABLE FitnessUser (
      , PRIMARY KEY (UserId)
 );
 
+CREATE TABLE Measurement (
+       MeasurementId BIGINT NOT NULL
+     , CurrentWeight FLOAT
+     , Unit INT
+     , CurrentNeck INT
+     , CurrentChest INT
+     , CurrentWaist INT
+     , CurrentArm INT
+     , CurrentHip INT
+     , CurrentLeg INT
+     , UserId BIGINT NOT NULL
+     , PRIMARY KEY (MeasurementId)
+);
+
+CREATE TABLE Goal (
+       GoalId BIGINT NOT NULL
+     , CurrentWeight FLOAT
+     , DesiredWeight FLOAT
+     , CompleteDesiredDate DATE
+     , CompleteCalculatedDate DATE
+     , CompleteActualDate DATE
+     , UserId BIGINT NOT NULL
+     , PRIMARY KEY (GoalId)
+);
+
+CREATE TABLE DailyGoal (
+       GoalId BIGINT NOT NULL
+     , Calories INT
+     , Carbs INT
+     , Fat INT
+     , Salt INT
+     , Protein INT
+     , Sugar INT
+     , UserId BIGINT NOT NULL
+     , PRIMARY KEY (GoalId)
+);
+
+CREATE TABLE MealGoal (
+       GoalId BIGINT NOT NULL
+     , Calories INT
+     , Carbs INT
+     , Fat INT
+     , Salt INT
+     , Protein INT
+     , Sugar INT
+     , PRIMARY KEY (GoalId)
+);
+
 CREATE TABLE UserFood (
        UserFoodId BIGINT NOT NULL
+     , Serving FLOAT
+     , Meal INT
+     , ConsumeDate DATE
      , UserId BIGINT NOT NULL
      , FoodId BIGINT NOT NULL
      , PRIMARY KEY (UserFoodId)

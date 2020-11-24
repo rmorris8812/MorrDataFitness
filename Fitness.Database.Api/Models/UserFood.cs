@@ -17,7 +17,7 @@ namespace Fitness.Database.Api.Models
         public long UserId { get; set; }
         [Column("foodid")]
         public long FoodId { get; set; }
-        [Column("dateconsumed")]
+        [Column("consumedate")]
         public DateTime DateConsumed { get; set; }
         [Column("meal")]
         public int Meal { get; set; }

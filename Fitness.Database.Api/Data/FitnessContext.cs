@@ -14,6 +14,7 @@ namespace Fitness.Database.Api.Data
         public virtual DbSet<FitnessUser> FitnessUser { get; set; }
         public virtual DbSet<Food> Food { get; set; }
         public virtual DbSet<UserFood> UserFood { get; set; }
+        public virtual DbSet<DailyGoal> DailyGoal { get; set; }
         /// <summary>
         /// Configure options.
         /// </summary>
@@ -66,6 +67,8 @@ namespace Fitness.Database.Api.Data
             modelBuilder.Entity<Food>().Property(b => b.FoodId)
                 .HasIdentityOptions(startValue: IdentityStart);
             modelBuilder.Entity<UserFood>().Property(b => b.UserFoodId)
+                .HasIdentityOptions(startValue: IdentityStart);
+            modelBuilder.Entity<DailyGoal>().Property(b => b.GoalId)
                 .HasIdentityOptions(startValue: IdentityStart);
         }
     }

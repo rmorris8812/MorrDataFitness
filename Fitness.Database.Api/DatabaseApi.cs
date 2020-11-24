@@ -217,7 +217,30 @@ namespace Fitness.Database.Api
             return false;
         }
         #endregion
-
+        #region UserFood
+        /// <summary>
+        /// Get a page of food items.
+        /// </summary>
+        /// <param name="startIndex">The start index (skip)</param>
+        /// <param name="maxResults">The max number of items to return.</param>
+        /// <returns>A list of food items.</returns>
+        public List<UserFood> GetUserFood(int startIndex, int maxResults)
+        {
+            return _context.UserFood.Skip(startIndex).Take(maxResults).ToList<UserFood>();
+        }
+        #endregion
+        #region Goal
+        /// <summary>
+        /// Get a page of food items.
+        /// </summary>
+        /// <param name="startIndex">The start index (skip)</param>
+        /// <param name="maxResults">The max number of items to return.</param>
+        /// <returns>A list of food items.</returns>
+        public List<UserFood> GetUserGoal(int startIndex, int maxResults)
+        {
+            return _context.UserFood.Skip(startIndex).Take(maxResults).ToList<UserFood>();
+        }
+        #endregion
         public void Dispose()
         {
             _context?.Dispose();
