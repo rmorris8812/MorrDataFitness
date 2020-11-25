@@ -14,19 +14,10 @@ using System.Threading.Tasks;
 
 namespace Fitness.Database.Api
 {
-    public class DatabaseApi : IDisposable
+    public class DatabaseApi : IFitnessService
     {
-        private static readonly ILogger _logger = NLog.LogManager.GetCurrentClassLogger();
-        private readonly FitnessContext _context;
-
-        public DatabaseApi()
-        {
-            _context = new FitnessContext();
-        }
-        public DatabaseApi(string connectionString)
-        {
-            _context = new FitnessContext(connectionString);
-        }
+        private static readonly ILogger _logger = LogManager.GetCurrentClassLogger();
+        private static readonly FitnessContext _context = new FitnessContext();
 
         #region User
         /// <summary>
@@ -157,6 +148,15 @@ namespace Fitness.Database.Api
         #endregion
         #region Food
         /// <summary>
+        /// Get a food by id
+        /// </summary>
+        /// <param name="id">The food id</param>
+        /// <returns>The user</returns>
+        public Task<Food> GetFoodByIdAsync(long id, CancellationToken token)
+        {
+            return _context.Food.FirstOrDefaultAsync(u => u.FoodId == id, token);
+        }
+        /// <summary>
         /// Get a page of food items.
         /// </summary>
         /// <param name="startIndex">The start index (skip)</param>
@@ -174,8 +174,7 @@ namespace Fitness.Database.Api
         /// <returns>A list of matching foods.</returns>
         public List<Food> SearchFood(string search)
         {
-            var query = string.Format(CultureInfo.InvariantCulture, "Name LIKE '%{0}%'", search);
-            var foods = _context.Food.FromSqlRaw(query).ToList<Food>();
+            var foods = _context.Food.Where(f => f.Name.Contains(search)).ToList<Food>();
             return foods;
         }
         /// <summary>
@@ -228,6 +227,20 @@ namespace Fitness.Database.Api
         {
             return _context.UserFood.Skip(startIndex).Take(maxResults).ToList<UserFood>();
         }
+        public List<UserFood> GetUserFood(int startIndex, int maxResults, DateTime dateTime)
+        {
+            return _context.UserFood.Where(f => f.DateConsumed.Date == dateTime.Date).Skip(startIndex).Take(maxResults).ToList<UserFood>();
+        }
+        public List<UserFood> GetUserFood(int startIndex, int maxResults, DateTime dateTime, int meal)
+        {
+            return _context.UserFood.Where(f => f.DateConsumed.Date == dateTime.Date && f.Meal == meal).Skip(startIndex).Take(maxResults).ToList<UserFood>();
+        }
+        public async Task<long> InsertUserFoodAsync(UserFood food, CancellationToken token)
+        {
+            _context.UserFood.Add(food);
+            await _context.SaveChangesAsync();
+            return food.UserFoodId;
+        }
         #endregion
         #region Goal
         /// <summary>
@@ -236,14 +249,14 @@ namespace Fitness.Database.Api
         /// <param name="startIndex">The start index (skip)</param>
         /// <param name="maxResults">The max number of items to return.</param>
         /// <returns>A list of food items.</returns>
-        public List<UserFood> GetUserGoal(int startIndex, int maxResults)
+        public List<Goal> GetUserGoal(int startIndex, int maxResults)
         {
-            return _context.UserFood.Skip(startIndex).Take(maxResults).ToList<UserFood>();
+            return _context.Goal.Skip(startIndex).Take(maxResults).ToList<Goal>();
         }
         #endregion
         public void Dispose()
         {
-            _context?.Dispose();
+            // _context?.Dispose();
         }
     }
 }

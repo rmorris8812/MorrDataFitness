@@ -18,7 +18,7 @@ namespace Fitness.Database.Api.Models
         [Column("calories")]
         public int Calories { get; set; }
         [Column("serving")]
-        public float ServiingSize { get; set; }
+        public double ServiingSize { get; set; }
         [Column("unit")]
         public int Unit { get; set; }
         [Column("carbs")]

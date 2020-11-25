@@ -1,6 +1,7 @@
 ﻿// ***************************************************************
 // Copyright 2020 MorrData LLC. All rights reserved.
 // ***************************************************************
+using Fitness.Api.Configuration;
 using Fitness.Api.Dtos;
 using Fitness.Api.Rest;
 using Fitness.Database.Api;
@@ -31,20 +32,13 @@ namespace Fitness.Api.Controllers
                 if (tenantId == null)
                     throw new ArgumentNullException("tenantId is required.");
 
-                using (var databaseApi = new DatabaseApi())
+                using (var databaseApi = ServiceFactory.GetService<IFitnessService>())
                 {
                     var user = await databaseApi.GetUserByEmailAsync(email, tenantId, CancellationToken.None);
                     if (user == null)
                         return RestFactory.CreateErrorResponse(HttpStatusCode.NotFound, "User not found!", Request);
-                    
-                    var dto = new UserDto()
-                    {
-                        FirstName = user.FirstName,
-                        LastName = user.LastName,
-                        Email = user.Email,
-                        Token = user.Token,
-                        TenantId = user.TenantId
-                    };
+
+                    var dto = Map(user);
                     return RestFactory.CreateResponse(HttpStatusCode.OK, dto, Request);
                 }
             } 
@@ -61,17 +55,18 @@ namespace Fitness.Api.Controllers
             {
                 if (userDto == null)
                     throw new ArgumentNullException("User is required.");
+                if (userDto.Email == null)
+                    throw new ArgumentNullException("User email is required.");
+                if (userDto.Email == null)
+                    throw new ArgumentNullException("User password is required.");
+                if (userDto.TenantId == null)
+                    throw new ArgumentNullException("User tenant id is required.");
 
-                using (var databaseApi = new DatabaseApi())
+                using (var databaseApi = ServiceFactory.GetService<IFitnessService>())
                 {
-                    var user = new FitnessUser()
-                    {
-                        FirstName = userDto.FirstName,
-                        LastName = userDto.LastName,
-                        Email = userDto.Email,
-                        Password = userDto.Password,
-                        TenantId = userDto.TenantId
-                    };
+                    var user = Map(userDto);
+                    user.Email = userDto.Email; // Mapper does not set this becuase it is an alternate key
+
                     var userId = await databaseApi.InsertUserAsync(user, CancellationToken.None);
                     if (userId == 0)
                         return RestFactory.CreateErrorResponse(HttpStatusCode.NotFound, "User not found!", Request);
@@ -93,15 +88,14 @@ namespace Fitness.Api.Controllers
                 if (userDto == null)
                     throw new ArgumentNullException("User is required.");
 
-                using (var databaseApi = new DatabaseApi())
+                using (var databaseApi = ServiceFactory.GetService<IFitnessService>())
                 {
                     var user = await databaseApi.GetUserByEmailAsync(userDto.Email, userDto.TenantId, CancellationToken.None);
                     if (user == null)
                         return RestFactory.CreateErrorResponse(HttpStatusCode.NotFound, "User not found!", Request);
 
-                    user.FirstName = userDto.FirstName;
-                    user.LastName = userDto.LastName;
-                    user.Password = userDto.Password;
+                    user = Map(userDto);
+                    
                     await databaseApi.UpdateUserAsync(user, CancellationToken.None);
                     return RestFactory.CreateResponse(HttpStatusCode.OK, true, Request);
                 }
@@ -112,7 +106,7 @@ namespace Fitness.Api.Controllers
                 return RestFactory.CreateErrorResponse(HttpStatusCode.InternalServerError, e, Request);
             }
         }
-        [HttpPut]
+        [HttpDelete]
         public async Task<RestResponse> Delete(long userId)
         {
             try
@@ -120,7 +114,7 @@ namespace Fitness.Api.Controllers
                 if (userId == 0)
                     throw new ArgumentNullException("User id is required.");
 
-                using (var databaseApi = new DatabaseApi())
+                using (var databaseApi = ServiceFactory.GetService<IFitnessService>())
                 {
                     var user = await databaseApi.GetUserByIdAsync(userId, CancellationToken.None);
                     if (user == null)
@@ -135,6 +129,29 @@ namespace Fitness.Api.Controllers
                 _logger.Error(e, "Error in Delete User.");
                 return RestFactory.CreateErrorResponse(HttpStatusCode.InternalServerError, e, Request);
             }
+        }
+        private FitnessUser Map(UserDto userDto)
+        {
+            var user = new FitnessUser()
+            {
+                FirstName = userDto.FirstName,
+                LastName = userDto.LastName,
+                // Email = userDto.Email, // This is an alternate key
+                Password = userDto.Password,
+                TenantId = userDto.TenantId
+            };
+            return user;
+        }
+        private UserDto Map(FitnessUser user)
+        {
+            var dto = new UserDto()
+            {
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email,
+                TenantId = user.TenantId
+            };
+            return dto;
         }
     }
 }

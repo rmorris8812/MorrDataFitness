@@ -15,6 +15,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleClient", "ConsoleCli
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fitness.Api.Docker", "Fitness.Api.Docker\Fitness.Api.Docker.csproj", "{70B48BF4-9AF0-4CFE-B127-75D4A30C87F9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fitness.Api.Common", "Fitness.Api.Common\Fitness.Api.Common.csproj", "{5F23953F-44F8-4F41-9268-9B57D4D8A9F3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{70B48BF4-9AF0-4CFE-B127-75D4A30C87F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{70B48BF4-9AF0-4CFE-B127-75D4A30C87F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{70B48BF4-9AF0-4CFE-B127-75D4A30C87F9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F23953F-44F8-4F41-9268-9B57D4D8A9F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F23953F-44F8-4F41-9268-9B57D4D8A9F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F23953F-44F8-4F41-9268-9B57D4D8A9F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F23953F-44F8-4F41-9268-9B57D4D8A9F3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

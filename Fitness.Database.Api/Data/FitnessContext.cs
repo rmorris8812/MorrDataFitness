@@ -1,6 +1,7 @@
 ﻿// ***************************************************************
 // Copyright 2020 MorrData LLC. All rights reserved.
 // ***************************************************************
+using Fitness.Api.Configuration;
 using Fitness.Database.Api.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -15,6 +16,8 @@ namespace Fitness.Database.Api.Data
         public virtual DbSet<Food> Food { get; set; }
         public virtual DbSet<UserFood> UserFood { get; set; }
         public virtual DbSet<DailyGoal> DailyGoal { get; set; }
+        public virtual DbSet<Goal> Goal { get; set; }
+        public virtual DbSet<Measurement> Measurement { get; set; }
         /// <summary>
         /// Configure options.
         /// </summary>
@@ -54,7 +57,7 @@ namespace Fitness.Database.Api.Data
             {
                 return _connectionString;
             }
-            var configurationProvider = new JsonConfiguration();
+            var configurationProvider = ConfigurationFactory.GetConfiguration();
             var connectionString = configurationProvider.GetValue("ConnectionString");
             if (connectionString == null)
                 throw new ArgumentNullException("Connection string not found");
@@ -62,14 +65,7 @@ namespace Fitness.Database.Api.Data
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<FitnessUser>().Property(b => b.Id)
-                .HasIdentityOptions(startValue: IdentityStart);
-            modelBuilder.Entity<Food>().Property(b => b.FoodId)
-                .HasIdentityOptions(startValue: IdentityStart);
-            modelBuilder.Entity<UserFood>().Property(b => b.UserFoodId)
-                .HasIdentityOptions(startValue: IdentityStart);
-            modelBuilder.Entity<DailyGoal>().Property(b => b.GoalId)
-                .HasIdentityOptions(startValue: IdentityStart);
+            modelBuilder.UseIdentityColumns();
         }
     }
 }

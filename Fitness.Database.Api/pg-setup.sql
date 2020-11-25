@@ -1,11 +1,15 @@
-﻿DROP TABLE UserFood;
-DROP TABLE FitnessUser;
+﻿DROP TABLE Measurement;
+DROP TABLE MealGoal;
+DROP TABLE DailyGoal;
+DROP TABLE Goal;
+DROP TABLE UserFood;
 DROP TABLE Food;
+DROP TABLE FitnessUser;
 
 CREATE SEQUENCE hibernate_sequence START 3000;
 
 CREATE TABLE Food (
-       FoodId BIGINT NOT NULL
+       FoodId BIGINT NOT NULL DEFAULT nextval('hibernate_sequence')
      , Name VARCHAR(256)
      , Calories INT
      , Serving FLOAT
@@ -19,7 +23,7 @@ CREATE TABLE Food (
 );
 
 CREATE TABLE FitnessUser (
-       UserId BIGINT NOT NULL
+       UserId BIGINT NOT NULL DEFAULT nextval('hibernate_sequence')
      , FirstName VARCHAR(256)
      , LastName VARCHAR(256)
      , Email VARCHAR(256)
@@ -32,7 +36,7 @@ CREATE TABLE FitnessUser (
 );
 
 CREATE TABLE Measurement (
-       MeasurementId BIGINT NOT NULL
+       MeasurementId BIGINT NOT NULL DEFAULT nextval('hibernate_sequence')
      , CurrentWeight FLOAT
      , Unit INT
      , CurrentNeck INT
@@ -46,7 +50,7 @@ CREATE TABLE Measurement (
 );
 
 CREATE TABLE Goal (
-       GoalId BIGINT NOT NULL
+       GoalId BIGINT NOT NULL DEFAULT nextval('hibernate_sequence')
      , CurrentWeight FLOAT
      , DesiredWeight FLOAT
      , CompleteDesiredDate DATE
@@ -57,7 +61,7 @@ CREATE TABLE Goal (
 );
 
 CREATE TABLE DailyGoal (
-       GoalId BIGINT NOT NULL
+       GoalId BIGINT NOT NULL DEFAULT nextval('hibernate_sequence')
      , Calories INT
      , Carbs INT
      , Fat INT
@@ -69,7 +73,7 @@ CREATE TABLE DailyGoal (
 );
 
 CREATE TABLE MealGoal (
-       GoalId BIGINT NOT NULL
+       GoalId BIGINT NOT NULL DEFAULT nextval('hibernate_sequence')
      , Calories INT
      , Carbs INT
      , Fat INT
@@ -80,7 +84,7 @@ CREATE TABLE MealGoal (
 );
 
 CREATE TABLE UserFood (
-       UserFoodId BIGINT NOT NULL
+       UserFoodId BIGINT NOT NULL DEFAULT nextval('hibernate_sequence')
      , Serving FLOAT
      , Meal INT
      , ConsumeDate DATE
@@ -89,11 +93,11 @@ CREATE TABLE UserFood (
      , PRIMARY KEY (UserFoodId)
 );
 
-INSERT INTO FitnessUser (UserId, FirstName, LastName, Email, Password, TenantId, ExternalAuth, UserRole) VALUES (1, 'Roy', 'Morris', 'rmorris8812@gmail.com', 'palm88!2', 'morrdata.com', '0', 'admin');
-UPDATE FitnessUser SET Password='cGFsbTg4ITI=';
+INSERT INTO FitnessUser (UserId, FirstName, LastName, Email, Password, TenantId, ExternalAuth, UserRole) 
+VALUES (1, 'Foo', 'Bar', 'foobar@acme.com', 'cGFsbTg4ITI=', 'acme.com', '0', 'user');
 
-SELECT * FROM FitnessUser;
+INSERT INTO FitnessUser (UserId, FirstName, LastName, Email, Password, TenantId, ExternalAuth, UserRole) 
+VALUES (2, 'Roy', 'Morris', 'roy.morris@morrdata.com', 'cGFsbTg4ITI=', 'morrdata.com', '0', 'admin');
 
-INSERT INTO Food (FoodId, Name, Calories, Serving, Unit, Carbs, Fat, Salt)
-VALUES (1, 'Banana', 151, 6, 0, 19, 0, 1);
-
+INSERT INTO Food (FoodId, Name, Calories, Serving, Unit, Carbs, Fat, Salt, Protein, Sugar)
+VALUES (1, 'Banana', 151, 6, 0, 19, 0, 1, 1, 1);

@@ -28,6 +28,14 @@ namespace Fitness.Api.Rest
             };
             return CreateResponse(statusCode, dataResource, request);
         }
+        public static RestResponse CreateResponse(HttpStatusCode statusCode, FoodDto food, HttpRequest request)
+        {
+            var dataResource = new FoodResource()
+            {
+                Data = food
+            };
+            return CreateResponse(statusCode, dataResource, request);
+        }
         public static RestResponse CreateResponse(HttpStatusCode statusCode, string data, HttpRequest request)
         {
             var dataResource = new StringResource()
