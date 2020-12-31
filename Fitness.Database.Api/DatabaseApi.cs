@@ -223,17 +223,17 @@ namespace Fitness.Database.Api
         /// <param name="startIndex">The start index (skip)</param>
         /// <param name="maxResults">The max number of items to return.</param>
         /// <returns>A list of food items.</returns>
-        public List<UserFood> GetUserFood(int startIndex, int maxResults)
+        public List<UserFood> GetUserFood(long userId, int startIndex, int maxResults)
         {
-            return _context.UserFood.Skip(startIndex).Take(maxResults).ToList<UserFood>();
+            return _context.UserFood.Where(f => f.UserId == userId).Skip(startIndex).Take(maxResults).ToList<UserFood>();
         }
-        public List<UserFood> GetUserFood(int startIndex, int maxResults, DateTime dateTime)
+        public List<UserFood> GetUserFood(long userId, int startIndex, int maxResults, DateTime dateTime)
         {
-            return _context.UserFood.Where(f => f.DateConsumed.Date == dateTime.Date).Skip(startIndex).Take(maxResults).ToList<UserFood>();
+            return _context.UserFood.Where(f => f.DateConsumed.Date == dateTime.Date && f.UserId == userId).Skip(startIndex).Take(maxResults).ToList<UserFood>();
         }
-        public List<UserFood> GetUserFood(int startIndex, int maxResults, DateTime dateTime, int meal)
+        public List<UserFood> GetUserFood(long userId, int startIndex, int maxResults, DateTime dateTime, int meal)
         {
-            return _context.UserFood.Where(f => f.DateConsumed.Date == dateTime.Date && f.Meal == meal).Skip(startIndex).Take(maxResults).ToList<UserFood>();
+            return _context.UserFood.Where(f => f.DateConsumed.Date == dateTime.Date && f.Meal == meal && f.UserId == userId).Skip(startIndex).Take(maxResults).ToList<UserFood>();
         }
         public async Task<long> InsertUserFoodAsync(UserFood food, CancellationToken token)
         {
@@ -244,14 +244,107 @@ namespace Fitness.Database.Api
         #endregion
         #region Goal
         /// <summary>
-        /// Get a page of food items.
+        /// Get a page of goals.
         /// </summary>
+        /// <param name="userId">The id of user</param>
         /// <param name="startIndex">The start index (skip)</param>
         /// <param name="maxResults">The max number of items to return.</param>
         /// <returns>A list of food items.</returns>
-        public List<Goal> GetUserGoal(int startIndex, int maxResults)
+        public Goal GetUserGoal(long userId)
         {
-            return _context.Goal.Skip(startIndex).Take(maxResults).ToList<Goal>();
+            return _context.Goal.Where(g => g.UserId == userId).FirstOrDefault();
+        }
+        /// <summary>
+        /// Create a user goal
+        /// </summary>
+        /// <param name="goal">The goal to create</param>
+        /// <returns>The goal's id</returns>
+        public long CreateUserGoal(Goal goal)
+        {
+            _context.Goal.Add(goal);
+            _context.SaveChanges();
+            return goal.GoalId;
+        }
+        /// <summary>
+        /// Update the user's goal.
+        /// </summary>
+        /// <param name="goal">The goal to update</param>
+        /// <returns>True if the goal exists, false if the user does not have a goal.</returns>
+        public bool UpdateUserGoal(Goal goal)
+        {
+            if (GetUserGoal(goal.UserId) == null)
+            {
+                return false;
+            }
+            _context.Goal.Update(goal);
+            _context.SaveChanges();
+            return true;
+        }
+        #endregion
+        #region DailyGoal
+        /// <summary>
+        /// Get the user's daily goals
+        /// </summary>
+        /// <param name="userId">The user id.</param>
+        /// <returns>The user's daily goal</returns>
+        public DailyGoal GetDailyGoal(long userId)
+        {
+            return _context.DailyGoal.Where(g => g.UserId == userId).FirstOrDefault();
+        }
+        /// <summary>
+        /// Create a user goal
+        /// </summary>
+        /// <param name="goal">The goal to create</param>
+        /// <returns>The goal's id</returns>
+        public long CreateDailyGoal(DailyGoal goal)
+        {
+            _context.DailyGoal.Add(goal);
+            _context.SaveChanges();
+            return goal.GoalId;
+        }
+        /// <summary>
+        /// Update the user's goal.
+        /// </summary>
+        /// <param name="goal">The goal to update</param>
+        /// <returns>True if the goal exists, false if the user does not have a goal.</returns>
+        public bool UpdateDailyGoal(DailyGoal goal)
+        {
+            if (GetDailyGoal(goal.UserId) == null)
+            {
+                return false;
+            }
+            _context.DailyGoal.Update(goal);
+            _context.SaveChanges();
+            return true;
+        }
+        #endregion
+        #region Measurement
+        public Measurement GetMeasurement(long userId)
+        {
+            return _context.Measurement.Where(m => m.UserId == userId).FirstOrDefault();
+        }
+
+        public List<Measurement> GetMeasurements(long userId, int startIndex, int maxResults)
+        {
+            return _context.Measurement.Where(m => m.UserId == userId).Skip(startIndex).Take(maxResults).ToList();
+        }
+
+        public long CreateMeasurement(Measurement measurement)
+        {
+            _context.Measurement.Add(measurement);
+            _context.SaveChanges();
+            return measurement.MeasurementId;
+        }
+
+        public bool UpdateMeasurement(Measurement measurement)
+        {
+            if (GetMeasurement(measurement.UserId) == null)
+            {
+                return false;
+            }
+            _context.Measurement.Update(measurement);
+            _context.SaveChanges();
+            return true;
         }
         #endregion
         public void Dispose()

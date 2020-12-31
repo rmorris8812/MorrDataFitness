@@ -12,6 +12,38 @@ namespace Fitness.Api.Rest
 {
     public static class RestFactory
     {
+        public static RestResponse CreateResponse(HttpStatusCode statusCode, DashboardDto goal, HttpRequest request)
+        {
+            var dataResource = new DashboardResource()
+            {
+                Data = goal
+            };
+            return CreateResponse(statusCode, dataResource, request);
+        }
+        public static RestResponse CreateResponse(HttpStatusCode statusCode, DailyGoalDto goal, HttpRequest request)
+        {
+            var dataResource = new DailyGoalResource()
+            {
+                Data = goal
+            };
+            return CreateResponse(statusCode, dataResource, request);
+        }
+        public static RestResponse CreateResponse(HttpStatusCode statusCode, GoalDto goal, HttpRequest request)
+        {
+            var dataResource = new GoalResource()
+            {
+                Data = goal
+            };
+            return CreateResponse(statusCode, dataResource, request);
+        }
+        public static RestResponse CreateResponse(HttpStatusCode statusCode, List<GoalDto> goal, HttpRequest request)
+        {
+            var dataResource = new GoalResource()
+            {
+                Data = goal
+            };
+            return CreateResponse(statusCode, dataResource, request);
+        }
         public static RestResponse CreateResponse(HttpStatusCode statusCode, UserDto user, HttpRequest request)
         {
             var dataResource = new UserResource()
@@ -31,6 +63,22 @@ namespace Fitness.Api.Rest
         public static RestResponse CreateResponse(HttpStatusCode statusCode, FoodDto food, HttpRequest request)
         {
             var dataResource = new FoodResource()
+            {
+                Data = food
+            };
+            return CreateResponse(statusCode, dataResource, request);
+        }
+        public static RestResponse CreateResponse(HttpStatusCode statusCode, List<UserFoodDto> food, HttpRequest request)
+        {
+            var dataResource = new UserFoodArrayResource()
+            {
+                Data = food
+            };
+            return CreateResponse(statusCode, dataResource, request);
+        }
+        public static RestResponse CreateResponse(HttpStatusCode statusCode, UserFoodDto food, HttpRequest request)
+        {
+            var dataResource = new UserFoodResource()
             {
                 Data = food
             };

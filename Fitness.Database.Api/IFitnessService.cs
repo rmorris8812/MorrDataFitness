@@ -1,4 +1,7 @@
-﻿using Fitness.Database.Api.Models;
+﻿// ***************************************************************
+// Copyright 2020 MorrData LLC. All rights reserved.
+// ***************************************************************
+using Fitness.Database.Api.Models;
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -102,7 +105,7 @@ namespace Fitness.Database.Api
         /// <param name="startIndex">The start index (skip)</param>
         /// <param name="maxResults">The max number of items to return.</param>
         /// <returns>A list of food items.</returns>
-        List<UserFood> GetUserFood(int startIndex, int maxResults);
+        List<UserFood> GetUserFood(long userId, int startIndex, int maxResults);
         /// <summary>
         /// Get a page of food items for a given date.
         /// </summary>
@@ -110,7 +113,7 @@ namespace Fitness.Database.Api
         /// <param name="maxResults">The max number of items to return.</param>
         /// <param name="dateTime">The date the food was consumed</param>
         /// <returns>A list of food items.</returns>
-        List<UserFood> GetUserFood(int startIndex, int maxResults, DateTime dateTime);
+        List<UserFood> GetUserFood(long userId, int startIndex, int maxResults, DateTime dateTime);
         /// <summary>
         /// Get a page of food items for a given date.
         /// </summary>
@@ -119,7 +122,7 @@ namespace Fitness.Database.Api
         /// <param name="dateTime">The date the food was consumed</param>
         /// <param name="meal">The meal the food was consumed (0=breakfast,1=lunch,2=dinner,3=snacks</param>
         /// <returns>A list of food items.</returns>
-        List<UserFood> GetUserFood(int startIndex, int maxResults, DateTime dateTime, int meal);
+        List<UserFood> GetUserFood(long userId, int startIndex, int maxResults, DateTime dateTime, int meal);
         /// <summary>
         /// Insert a UserFood item.
         /// </summary>
@@ -130,12 +133,51 @@ namespace Fitness.Database.Api
         #endregion
         #region Goal
         /// <summary>
-        /// Get a page of food items.
+        /// Get a page of goals.
         /// </summary>
-        /// <param name="startIndex">The start index (skip)</param>
-        /// <param name="maxResults">The max number of items to return.</param>
-        /// <returns>A list of food items.</returns>
-        List<Goal> GetUserGoal(int startIndex, int maxResults);
+        /// <param name="userId">The user id</param>
+        /// <returns>A list of goals</returns>
+        Goal GetUserGoal(long userId);
+        /// <summary>
+        /// Create a user goal
+        /// </summary>
+        /// <param name="goal">The goal to create</param>
+        /// <returns>The goal's id</returns>
+        long CreateUserGoal(Goal goal);
+        /// <summary>
+        /// Update the user's goal.
+        /// </summary>
+        /// <param name="goal">The goal to update</param>
+        /// <returns>True if the goal exists, false if the user does not have a goal.</returns>
+        bool UpdateUserGoal(Goal goal);
+
+        #endregion
+        #region DailyGoal
+        /// <summary>
+        /// Get the user's daily goals
+        /// </summary>
+        /// <param name="userId">The user id.</param>
+        /// <returns>The user's daily goal</returns>
+        DailyGoal GetDailyGoal(long userId);
+        /// <summary>
+        /// Create a user goal
+        /// </summary>
+        /// <param name="goal">The goal to create</param>
+        /// <returns>The goal's id</returns>
+        long CreateDailyGoal(DailyGoal goal);
+        /// <summary>
+        /// Update the user's goal.
+        /// </summary>
+        /// <param name="goal">The goal to update</param>
+        /// <returns>True if the goal exists, false if the user does not have a goal.</returns>
+        bool UpdateDailyGoal(DailyGoal goal);
+
+        #endregion
+        #region Measurement
+        Measurement GetMeasurement(long userId);
+        List<Measurement> GetMeasurements(long userId, int startIndex, int maxResults);
+        long CreateMeasurement(Measurement measurement);
+        bool UpdateMeasurement(Measurement measurement);
         #endregion
     }
 }

@@ -5,13 +5,13 @@ using Fitness.Api.Dtos;
 
 namespace Fitness.Api.Rest
 {
-    public class FoodResource : IRestResource
+    public class UserFoodResource : IRestResource
     {
-        private FoodDto _dto;
+        private UserFoodDto _dto;
         public object Data
         {
             get { return _dto; }
-            set { _dto = (FoodDto) value; }
+            set { _dto = (UserFoodDto)value; }
         }
     }
 }

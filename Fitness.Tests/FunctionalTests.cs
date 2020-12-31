@@ -222,7 +222,7 @@ namespace Fitness.Tests
                 var foodId = databaseApi.InsertUserFoodAsync(food, CancellationToken.None).Result;
                 foodId.Should().NotBe(0);
 
-                var foods = databaseApi.GetUserFood(0, 100, DateTime.Now);
+                var foods = databaseApi.GetUserFood(food.UserId, 0, 100, DateTime.Now);
                 foods.Should().NotBeNull();
                 foods.Count.Should().NotBe(0);
             }
@@ -244,7 +244,7 @@ namespace Fitness.Tests
                 var foodId = databaseApi.InsertUserFoodAsync(food, CancellationToken.None).Result;
                 foodId.Should().NotBe(0);
 
-                var foods = databaseApi.GetUserFood(0, 100, DateTime.Now, MealTypes.Breakfast);
+                var foods = databaseApi.GetUserFood(food.UserId, 0, 100, DateTime.Now, MealTypes.Breakfast);
                 foods.Should().NotBeNull();
                 foods.Count.Should().NotBe(0);
             }

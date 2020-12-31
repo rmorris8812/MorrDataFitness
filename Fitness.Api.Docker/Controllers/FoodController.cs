@@ -33,7 +33,7 @@ namespace Fitness.Api.Docker.Controllers
                     var dtos = new List<FoodDto>();
                     foreach (var food in foods)
                     {
-                        dtos.Add(Map(food));
+                        dtos.Add(Mappers.Map(food));
                     }
                     return RestFactory.CreateResponse(HttpStatusCode.OK, dtos, Request);
                 }
@@ -55,7 +55,7 @@ namespace Fitness.Api.Docker.Controllers
                     var dtos = new List<FoodDto>();
                     foreach (var food in foods)
                     {
-                        dtos.Add(Map(food));
+                        dtos.Add(Mappers.Map(food));
                     }
                     return RestFactory.CreateResponse(HttpStatusCode.OK, dtos, Request);
                 }
@@ -76,7 +76,7 @@ namespace Fitness.Api.Docker.Controllers
 
                 using (var databaseApi = ServiceFactory.GetService<IFitnessService>())
                 {
-                    var food = Map(foodDto);
+                    var food = Mappers.Map(foodDto);
 
                     var foodId = await databaseApi.InsertFoodAsync(food, CancellationToken.None);
                     if (foodId == 0)
@@ -105,9 +105,9 @@ namespace Fitness.Api.Docker.Controllers
                     if (food == null)
                         return RestFactory.CreateErrorResponse(HttpStatusCode.NotFound, "User not found!", Request);
 
-                    food = Map(foodDto);
+                    food = Mappers.Map(foodDto);
 
-                    await databaseApi.UpdateUserAsync(food, CancellationToken.None);
+                    await databaseApi.UpdateFoodAsync(food, CancellationToken.None);
                     return RestFactory.CreateResponse(HttpStatusCode.OK, true, Request);
                 }
             }
@@ -140,38 +140,6 @@ namespace Fitness.Api.Docker.Controllers
                 _logger.Error(e, "Error in Delete Food.");
                 return RestFactory.CreateErrorResponse(HttpStatusCode.InternalServerError, e, Request);
             }
-        }
-        private Food Map(FoodDto dto)
-        {
-            var food = new Food()
-            {
-                Name = dto.Name,
-                Calories = dto.Calories,
-                Carbs = dto.Carbs,
-                Fat = dto.Fat,
-                Protein = dto.Protein,
-                Salt = dto.Salt,
-                ServiingSize = dto.ServiingSize,
-                Sugar = dto.Sugar,
-                Unit = dto.Unit
-            };
-            return food;
-        }
-        private FoodDto Map(Food food)
-        {
-            var dto = new FoodDto()
-            {
-                Name = food.Name,
-                Calories = food.Calories,
-                Carbs = food.Carbs,
-                Fat = food.Fat,
-                Protein = food.Protein,
-                Salt = food.Salt,
-                ServiingSize = food.ServiingSize,
-                Sugar = food.Sugar,
-                Unit = food.Unit
-            };
-            return dto;
         }
     }
 }

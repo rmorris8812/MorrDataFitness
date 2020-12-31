@@ -2,16 +2,17 @@
 // Copyright 2020 MorrData LLC. All rights reserved.
 // ***************************************************************
 using Fitness.Api.Dtos;
+using System.Collections.Generic;
 
 namespace Fitness.Api.Rest
 {
-    public class FoodResource : IRestResource
+    public class UserFoodArrayResource : IRestResource
     {
-        private FoodDto _dto;
+        private List<UserFoodDto> _dto;
         public object Data
         {
             get { return _dto; }
-            set { _dto = (FoodDto) value; }
+            set { _dto = (List<UserFoodDto>)value; }
         }
     }
 }

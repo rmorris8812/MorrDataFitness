@@ -38,7 +38,7 @@ namespace Fitness.Api.Controllers
                     if (user == null)
                         return RestFactory.CreateErrorResponse(HttpStatusCode.NotFound, "User not found!", Request);
 
-                    var dto = Map(user);
+                    var dto = Mappers.Map(user);
                     return RestFactory.CreateResponse(HttpStatusCode.OK, dto, Request);
                 }
             } 
@@ -64,8 +64,8 @@ namespace Fitness.Api.Controllers
 
                 using (var databaseApi = ServiceFactory.GetService<IFitnessService>())
                 {
-                    var user = Map(userDto);
-                    user.Email = userDto.Email; // Mapper does not set this becuase it is an alternate key
+                    var user = Mappers.Map(userDto);
+                    user.Email = userDto.Email; // Mappers.Mapper does not set this becuase it is an alternate key
 
                     var userId = await databaseApi.InsertUserAsync(user, CancellationToken.None);
                     if (userId == 0)
@@ -94,7 +94,7 @@ namespace Fitness.Api.Controllers
                     if (user == null)
                         return RestFactory.CreateErrorResponse(HttpStatusCode.NotFound, "User not found!", Request);
 
-                    user = Map(userDto);
+                    user = Mappers.Map(userDto);
                     
                     await databaseApi.UpdateUserAsync(user, CancellationToken.None);
                     return RestFactory.CreateResponse(HttpStatusCode.OK, true, Request);
@@ -129,29 +129,6 @@ namespace Fitness.Api.Controllers
                 _logger.Error(e, "Error in Delete User.");
                 return RestFactory.CreateErrorResponse(HttpStatusCode.InternalServerError, e, Request);
             }
-        }
-        private FitnessUser Map(UserDto userDto)
-        {
-            var user = new FitnessUser()
-            {
-                FirstName = userDto.FirstName,
-                LastName = userDto.LastName,
-                // Email = userDto.Email, // This is an alternate key
-                Password = userDto.Password,
-                TenantId = userDto.TenantId
-            };
-            return user;
-        }
-        private UserDto Map(FitnessUser user)
-        {
-            var dto = new UserDto()
-            {
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                Email = user.Email,
-                TenantId = user.TenantId
-            };
-            return dto;
         }
     }
 }
